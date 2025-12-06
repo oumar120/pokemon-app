@@ -1,0 +1,80 @@
+                    <div class="container">
+                        @if(pokemon()) {
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="row g-0">
+                            <div class="col-md-4 d-flex align-items-center justify-content-center bg-light">
+                                <img class="img-fluid rounded-start object-fit-cover" [src]="pokemon()!.picture" [alt]="pokemon()!.name">
+                            </div>
+                            <div class="col-md-8 p-2">
+                                <div class="card-body">
+                                <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+                                    <div class="mb-3 pb-3 border-bottom row">
+                                        <label for="pokemonName" class="form-label col-sm-2 col-form-label fw-bold">Name</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="name" formControlName="name">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 pb-3 border-bottom row align-items-center">
+                                        <label for="pokemonHp" class="form-label col-sm-2 col-form-label fw-bold">Points de vie</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group">
+                                                <button class="input-group-text" 
+                                                        (click)="pokemonDecrement('life')" type="button">-</button>
+                                                <input  class="form-control text-center" 
+                                                        [class.is-invalid]="onControlType.invalid" 
+                                                        [value]="pokemon()!.life" 
+                                                        formControlName="life">
+                                                <button class="input-group-text" 
+                                                        (click)="pokemonIncrement('life')" type="button"> +</button>
+
+                                            </div>
+                                            <app-error-form [control]="onControlType"></app-error-form>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 pb-3 border-bottom row align-items-center">
+                                        <label for="pokemonHp" class="form-label col-sm-2 col-form-label fw-bold">Dégats</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group">
+                                                <button class="input-group-text"
+                                                (click)="pokemonDecrement('damage')" type="button">-</button>
+                                                <input class="form-control text-center" [value]="pokemon()!.damage" formControlName="damage">
+                                                <button class="input-group-text" 
+                                                (click)="pokemonIncrement('damage')" type="button">+</button>
+                                            </div>
+                                            <app-error-form [control]="onControlDamage"></app-error-form>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 pb-3 border-bottom">
+                                        <label class="form-label col-form-label fw-bold">Types:</label>
+                                        
+                                        @for(type of formArray.controls;let i=$index; track type) {
+                                            <span class="badge" appColor [pokemon]="pokemon()" >{{ type.value }}
+                                            <button type="button" class="btn-close btn-close-white btn-sm ms-1" aria-label="Close" (click)="formArray.removeAt(i)">X</button>
+                                            </span>
+                                        }
+                                        <div class="d-flex flex-wrap ms-5">
+                                            <div *ngFor="let type of pokemonService.getPokemonsType()" class="form-check form-check-inline col-md-2">
+                                                <input class="form-check-input"
+                                                #checkbox
+                                                 type="checkbox" 
+                                                 [id]="type"
+                                                 (change)="pokemonTypeChecked(type,checkbox.checked)"
+                                                 [checked]="pokemonTypeSelected(type)">
+                                                <label class="form-check-label" [for]="type">{{ type }}</label>
+                                            </div>
+                                        </div>
+                                        @if(formArray.hasError("required")) {
+                                            <div class="text-danger">⚠️ Le pokémon doit avoir au moins un type</div>
+                                            }
+                                    </div>
+                                    <button class="btn btn-success" [routerLink]="['/pokemons', pokemon()!.id]">retour</button>
+                                    <button type="submit" class="btn btn-success float-end" [disabled]="editForm.invalid">sauvegarder</button>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    }
+                </div>
