@@ -49,16 +49,6 @@ Compiler en production :
 
 ng build --prod
 
-Structure du projet
-src/
- ├── app/
- │   ├── components/
- │   ├── pages/
- │   ├── services/
- │   └── models/
- ├── assets/
- └── environments/
-
 Déploiement Firebase
 
 Commande utilisée pour déployer :
@@ -72,4 +62,5 @@ Oumar BALDE
 Développeur web – Angular | Django | Python
 
 LinkedIn : https://linkedin.com/in/oumar-balde-9454b4154
+
 GitHub : https://github.com/oumar120
